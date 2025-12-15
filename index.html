@@ -15,7 +15,7 @@
     /* =====================================================
        THEME CONTROL (ADMIN ONLY)
        ===================================================== */
-  /* body {
+    body {
       --bg: #ffffff;
       --text: #0f172a;
       --muted: #475569;
@@ -23,9 +23,9 @@
       --card: #f8fafc;
       --border: #e5e7eb;
     }
-*/
-     DARK KNIGHT 
-     body { --bg:#0b0f19; --text:#e5e7eb; --muted:#9ca3af; --primary:#3b82f6; --card:#111827; --border:#1f2937; }
+
+    /* DARK KNIGHT */
+    /* body { --bg:#0b0f19; --text:#e5e7eb; --muted:#9ca3af; --primary:#3b82f6; --card:#111827; --border:#1f2937; } */
 
     /* SERVER ROOM */
     /* body { --bg:#050b12; --text:#e0f2fe; --muted:#7dd3fc; --primary:#22d3ee; --card:#0f172a; --border:#1e293b; } */
@@ -47,7 +47,14 @@
     .nav-inner { max-width:1200px; margin:auto; padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
     .logo { font-weight:800; }
 
-    header { min-height:100vh; background:url('hero-workshop.jpg') center/cover no-repeat; position:relative; display:flex; align-items:center; justify-content:center; }
+    header {
+      min-height: 100vh;
+      background: url('assets/hero-workshop.jpg') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     header::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.45); }
     .hero-content { position:relative; color:white; text-align:center; max-width:800px; padding:2rem; }
     .hero-content h1 { font-size:clamp(2.5rem,6vw,4rem); margin-bottom:1rem; }
@@ -58,8 +65,48 @@
     section h2 { font-size:2.2rem; margin-bottom:1rem; }
     section p { color:var(--muted); max-width:700px; }
 
-    .carousel { position:relative; margin-top:4rem; display:flex; justify-content:center; gap:2rem; perspective:1200px; }
-    .card { width:280px; height:360px; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:1.5rem; transition:transform .6s ease, box-shadow .6s ease; }
+    .carousel {
+      position: relative;
+      margin-top: 4rem;
+      height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1600px;
+      overflow: hidden;
+    }
+    .card {
+      position: absolute;
+      width: 300px;
+      height: 380px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 1.8rem;
+      transition: transform 0.8s ease, opacity 0.8s ease, filter 0.8s ease, box-shadow 0.8s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,.12);
+    }
+
+    .card.center {
+      transform: translateZ(260px) scale(1.05);
+      opacity: 1;
+      filter: blur(0);
+      z-index: 3;
+    }
+
+    .card.left {
+      transform: translateX(-260px) rotateY(35deg) translateZ(80px);
+      opacity: .5;
+      filter: blur(1.5px);
+      z-index: 2;
+    }
+
+    .card.right {
+      transform: translateX(260px) rotateY(-35deg) translateZ(80px);
+      opacity: .5;
+      filter: blur(1.5px);
+      z-index: 2;
+    }
     .card:hover { transform:translateY(-12px) scale(1.04); box-shadow:0 30px 60px rgba(0,0,0,.15); }
 
     footer { border-top:1px solid var(--border); padding:4rem 1.5rem; text-align:center; color:var(--muted); }
@@ -81,7 +128,7 @@
 
 <nav>
   <div class="nav-inner">
-    <img src="assets/logo_black.png" alt="BGAA Engineering" style="height:36px" />
+    <img id="bgaa-logo" src="assets/logo_black.png" alt="BGAA Engineering" style="height:36px" />
     <a href="https://bgaaonline.lovable.app" class="cta">Explore</a>
   </div>
 </nav>
@@ -128,7 +175,48 @@
 <div class="ad">
   <!-- mid-section-responsive -->
   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6021933921037296" data-ad-slot="8166869824" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <script>
+  /* ================= FEATURED 3D CAROUSEL ================= */
+  const cards = Array.from(document.querySelectorAll('.card'));
+  let index = 0;
+
+  function updateCarousel() {
+    cards.forEach((card, i) => {
+      card.classList.remove('center', 'left', 'right');
+      card.style.opacity = '';
+      if (i === index) card.classList.add('center');
+      else if (i === (index - 1 + cards.length) % cards.length) card.classList.add('left');
+      else if (i === (index + 1) % cards.length) card.classList.add('right');
+      else card.style.opacity = 0;
+    });
+  }
+
+  function rotateCCW() {
+    index = (index + 1) % cards.length;
+    updateCarousel();
+  }
+
+  updateCarousel();
+  setInterval(rotateCCW, 3500);
+
+  /* ================= THEME-AWARE LOGO SWAP ================= */
+  const logo = document.getElementById('bgaa-logo');
+  const computedBg = getComputedStyle(document.body).getPropertyValue('--bg').trim();
+
+  function isDark(color) {
+    const c = color.replace('#','');
+    const r = parseInt(c.substr(0,2),16);
+    const g = parseInt(c.substr(2,2),16);
+    const b = parseInt(c.substr(4,2),16);
+    return (r*0.299 + g*0.587 + b*0.114) < 140;
+  }
+
+  if (computedBg.startsWith('#') && isDark(computedBg)) {
+    logo.src = 'assets/logo_white.png';
+  } else {
+    logo.src = 'assets/logo_black.png';
+  }
+</script>
 </div>
 
 <footer>
