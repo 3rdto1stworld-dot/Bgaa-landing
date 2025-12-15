@@ -1,143 +1,234 @@
 <!doctype html>
-<html lang="en" data-theme="default">
+<html lang="en">
 <head>
-  <!-- Google AdSense (load once) -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6021933921037296"
-    crossorigin="anonymous"></script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>BGAA Engineering — Democratizing Creativity</title>
 
-  <meta name="description" content="BGAA Engineering exists to make creativity accessible, effortless, and profitable. A place where ideas become tangible." />
-  <meta name="author" content="BGAA Engineering" />
+  <!-- SEO -->
+  <meta name="description" content="BGAA Engineering is democratizing creativity by making engineering creation accessible, effortless, and profitable." />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="BGAA Engineering — Democratizing Creativity" />
-  <meta property="og:description" content="Accelerating creation, defying destruction." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://USERNAME.github.io/REPO-NAME/" />
-  <meta property="og:image" content="assets/hero-workshop.jpg" />
+  <!-- Google AdSense (global) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6021933921037296" crossorigin="anonymous"></script>
 
-  <link rel="icon" href="assets/logo_black.png" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* =====================================================
+       THEME CONTROL (ADMIN ONLY)
+       Change THEME below to switch site mood
+       Options:
+       default | darkknight | serverroom | nocturne | holiday | christmas
+       ===================================================== */
+    :root { --theme: default; }
+
+    /* =====================================================
+       DEFAULT THEME (ACTIVE)
+       ===================================================== */
+    body {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #2563eb;
+      --card: #f8fafc;
+      --border: #e5e7eb;
+    }
+
+    /* ================= DARK KNIGHT ================= */
+    /* body { --bg:#0b0f19; --text:#e5e7eb; --muted:#9ca3af; --primary:#3b82f6; --card:#111827; --border:#1f2937; } */
+
+    /* ================= SERVER ROOM ================= */
+    /* body { --bg:#050b12; --text:#e0f2fe; --muted:#7dd3fc; --primary:#22d3ee; --card:#0f172a; --border:#1e293b; } */
+
+    /* ================= URBAN NOCTURNE =============== */
+    /* body { --bg:#0f0f0f; --text:#f5f5f4; --muted:#a8a29e; --primary:#f59e0b; --card:#1c1917; --border:#292524; } */
+
+    /* ================= HOLIDAY ====================== */
+    /* body { --bg:#fffaf5; --text:#3f2d20; --muted:#7c5c46; --primary:#b45309; --card:#fff7ed; --border:#fed7aa; } */
+
+    /* ================= CHRISTMAS ==================== */
+    /* body { --bg:#0f2a1d; --text:#f0fdf4; --muted:#86efac; --primary:#dc2626; --card:#14532d; --border:#166534; } */
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* =====================================================
+       NAV
+       ===================================================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-weight: 800; letter-spacing: 0.5px; }
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+    header {
+      min-height: 100vh;
+      background: url('hero-workshop.jpg') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+    }
+    .hero-content {
+      position: relative;
+      max-width: 800px;
+      padding: 2rem;
+      color: #fff;
+      animation: fadeUp 1.2s ease both;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      margin-bottom: 1rem;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+    .cta {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    /* =====================================================
+       SECTIONS
+       ===================================================== */
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 6rem 1.5rem;
+      animation: fadeUp 1s ease both;
+    }
+    section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    section p { color: var(--muted); max-width: 700px; }
+
+    /* =====================================================
+       CAROUSEL
+       ===================================================== */
+    .carousel {
+      perspective: 1200px;
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .card {
+      width: 260px;
+      height: 340px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: rotateY(0deg) translateY(-10px) scale(1.03);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    }
+
+    /* =====================================================
+       ADSENSE
+       ===================================================== */
+    .ad { margin: 4rem 0; text-align: center; }
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* =====================================================
+       ANIMATIONS
+       ===================================================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-
 <body>
 
-<header class="nav">
-  <div class="nav-left">
-    <img src="assets/logo_black.png" alt="BGAA Engineering logo">
-    <span>BGAA Engineering</span>
+<nav>
+  <div class="nav-inner">
+    <div class="logo">BGAA</div>
+    <a href="https://bgaaonline.lovable.app" class="cta">Explore</a>
   </div>
-  <nav>
-    <a href="https://bgaaonline.lovable.app">Explore</a>
-  </nav>
+</nav>
+
+<header>
+  <div class="hero-content">
+    <h1>Democratizing Creativity</h1>
+    <p>Accelerating creation, defying destruction.</p>
+    <a href="https://bgaaonline.lovable.app" class="cta">Explore</a>
+  </div>
 </header>
 
-<main>
+<section>
+  <h2>Why BGAA Engineering Exists</h2>
+  <p>
+    Every human carries a form of creativity that wants to become tangible.
+    BGAA Engineering exists to remove friction between imagination and reality.
+    We build systems, tools, and pathways that allow ideas to surface, grow,
+    and become useful in the real world.
+  </p>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>Democratizing Creativity</h1>
-      <p>Accelerating creation, defying destruction.</p>
-      <a class="btn primary" href="https://bgaaonline.lovable.app">Explore</a>
-    </div>
-  </section>
+  <div class="carousel">
+    <a class="card" href="https://bgaaonline.lovable.app/shop">Shop</a>
+    <a class="card" href="https://bgaaonline.lovable.app/cad-library">CAD Library</a>
+    <a class="card" href="https://bgaaonline.lovable.app/tutorials">Tutorials</a>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section class="about">
-    <h2>Why BGAA Engineering Exists</h2>
-    <p>
-      Every person carries something tangible they can give to the world.
-      An idea. A solution. A form of expression waiting for the right moment.
-    </p>
-    <p>
-      BGAA Engineering exists to remove what stands in the way of that moment.
-      We focus on engineering creativity not as a rigid discipline, but as a living,
-      human process that deserves room to breathe, grow, and reach others.
-    </p>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="features">
-    <div class="feature">
-      <h3>Learn Without Intimidation</h3>
-      <p>
-        Whether you are starting fresh or sharpening existing skills,
-        BGAA provides pathways that respect curiosity instead of testing endurance.
-      </p>
-    </div>
-
-    <div class="feature">
-      <h3>Build With Confidence</h3>
-      <p>
-        From digital designs to physical outcomes, we help bridge ideas into
-        forms that feel real, achievable, and yours.
-      </p>
-    </div>
-
-    <div class="feature">
-      <h3>Share and Grow Ideas</h3>
-      <p>
-        Creativity thrives in the open. BGAA encourages exchange,
-        iteration, and collective momentum.
-      </p>
-    </div>
-
-    <div class="feature">
-      <h3>Turn Creation Into Value</h3>
-      <p>
-        Expression does not have to stop at passion.
-        We support paths where creativity becomes sustainable and rewarding.
-      </p>
-    </div>
-  </section>
-
-  <!-- MID CONTENT AD -->
-  <section class="ad-section">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-6021933921037296"
-      data-ad-slot="8166869824"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Start Where You Are</h2>
-    <p>
-      You don’t need permission to create.
-      You only need a place to begin.
-    </p>
-    <a class="btn secondary" href="https://bgaaonline.lovable.app">Enter the Platform</a>
-  </section>
-
-</main>
+<div class="ad">
+  <!-- mid-section-responsive -->
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6021933921037296" data-ad-slot="8166869824" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
 <footer>
-  <p>© 2025 BGAA Engineering</p>
-
-  <!-- FOOTER AD -->
-  <ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-6021933921037296"
-    data-ad-slot="1158608345"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
+  © BGAA Engineering · Democratizing Creativity
 </footer>
 
-<script src="main.js"></script>
 </body>
 </html>
