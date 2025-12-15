@@ -1,3 +1,8 @@
-// Reserved for future interactivity
-// Keeping this light helps AdSense and SEO
-console.log("BGAA Engineering landing loaded");
+// Theme toggler (future UI hook)
+function setTheme(name) {
+  document.documentElement.setAttribute("data-theme", name);
+}
+
+// Example:
+// setTheme("dark");
+// setTheme("server");
